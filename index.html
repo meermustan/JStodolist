@@ -30,7 +30,7 @@
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title">
-            <small id="add">Add items to the list</small>
+            <small id="help">Add items to the list</small>
 
         </div>
         <div class="mb-3">
@@ -97,7 +97,7 @@
                     localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
                 }
                 else{
-                    validity = document.getElementById('Help');
+                    validity = document.getElementById('help');
                     itemJsonArray.forEach(element => {
                         if (tit == element[0]) {
                           add=false;
@@ -159,6 +159,9 @@
         alertingUser = confirm('Do you want to delete all items');
         if (alertingUser == true) {
             localStorage.clear()
+            validationText = document.getElementById('help');
+            validationText.style.color = 'black';
+            validationText.innerText = "Add items to the list";
             update();
         }
         else {
