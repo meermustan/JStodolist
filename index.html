@@ -30,6 +30,8 @@
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title">
+            <small id="add">Add items to the list</small>
+
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
@@ -77,22 +79,51 @@
     update();
 
     function getAndUpdate() {
-        tit = document.getElementById('title').value;
-        desc = document.getElementById('description').value;
-        if (localStorage.getItem('itemsJson') == null) {
-            itemJsonArray = [];
-            itemJsonArray.push([tit, desc]);
-            localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
-        }
-        else {
-            itemJsonArrayStr = localStorage.getItem('itemsJson');
-            itemJsonArray = JSON.parse(itemJsonArrayStr);
-            itemJsonArray.push([tit, desc]);
-            localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+            console.log("Updating List...");
+            tit = document.getElementById('title').value;
+            desc = document.getElementById('description').value;
+            if (localStorage.getItem('itemsJson') == null) {
+                itemJsonArray = [];
+                itemJsonArray.push([tit, desc]);
+                console.log(itemJsonArray)
+                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+            }
+            else {
+                itemJsonArrayStr = localStorage.getItem('itemsJson')
+                itemJsonArray = JSON.parse(itemJsonArrayStr);
+                demoArray = []
+                if (itemJsonArrayStr == JSON.stringify(demoArray)) {
+                    itemJsonArray.push([tit, desc]);
+                    localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+                }
+                else{
+                    validity = document.getElementById('Help');
+                    itemJsonArray.forEach(element => {
+                        if (tit == element[0]) {
+                          add=false;
+                        }
+                        else {
+                          add=true
+                        }
+    
+                    });
+                    if (add==true){
+                                validity.innerText = "Add an items to the list";
+                            validity.style.color = 'black';
+                            itemJsonArray.push([tit, desc]);
+                            localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+                    }
+                    else{
+                       console.log('same title inputs');
+                            validity.style.color = 'red';
+                            validity.innerText = "*This is not valid you need to change title ";
+                      
+                    }
 
+                }
+            }
+            update();
         }
-        update();
-    }
 
     function update() {
         if (localStorage.getItem('itemsJson') == null) {
